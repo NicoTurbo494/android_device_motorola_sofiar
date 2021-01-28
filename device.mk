@@ -200,13 +200,19 @@ $(call inherit-product, build/make/target/product/gsi_keys.mk)
 PRODUCT_PACKAGES += telephony-ext
 
 # bluetooth
-PRODUCT_PACKAGES += \
-    audio.bluetooth.default \
-    android.hardware.bluetooth.audio@2.0-impl \
-    BluetoothQti \
-    vendor.qti.hardware.bluetooth_audio@2.0.vendor \
-    vendor.qti.hardware.btconfigstore@1.0.vendor \
-    liba2dpoffload \
-    libhdmiedid \
-    libhfp \
-    libsndmonitor
+PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/commonsys/system/bt/conf
+PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/commonsys/packages/apps/Bluetooth
+
+PRODUCT_PACKAGE_OVERLAYS += vendor/qcom/opensource/commonsys-intf/bluetooth/overlay/qva
+
+PRODUCT_PACKAGES +=  \
+    BluetoothExt \
+    vendor.qti.hardware.btconfigstore@2.0 \
+    android.hardware.bluetooth@1.0 \
+    vendor.qti.hardware.bluetooth_dun-V1.0-java \
+    libbtconfigstore \
+    libbluetooth_qti
+
+#bootfix
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.control_privapp_permissions=log
